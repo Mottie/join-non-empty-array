@@ -1,0 +1,40 @@
+{
+  "name": "join-non-empty-array",
+  "version": "1.0.0",
+  "description": "Join non-empty array elements into a string",
+  "license": "MIT",
+  "repository": "Mottie/join-non-empty-array",
+  "author": {
+    "name": "Rob Garrison",
+    "email": "wowmotty@gmail.com"
+  },
+  "engines": {
+    "node": ">=6"
+  },
+  "scripts": {
+    "test": "xo && ava"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "join",
+    "array",
+    "non-empty",
+    "string"
+  ],
+  "xo": {
+    "space": false,
+    "rules": {
+      "no-sparse-arrays": 0,
+      "quotes": [
+        "error",
+        "double"
+      ]
+    }
+  },
+  "devDependencies": {
+    "ava": "*",
+    "xo": "*"
+  }
+}
