@@ -50,7 +50,7 @@ const array = [
 joinArray(array);
 //=> "\t,1 ,\t2"
 
-joinArray(array, ",", {ignoreWhiteSpace; true});
+joinArray(array, ",", {ignoreWhiteSpace: true});
 //=> "1 ,\t2"
 ```
 
