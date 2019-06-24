@@ -21,6 +21,7 @@
     "camelcase": 2,
     "indent": [2, "tab"],
     "no-array-constructor": 2,
+    "padding-line-between-statements": 0,
     "quotes": [2, "double", {
       "allowTemplateLiterals": true,
       "avoidEscape": true
