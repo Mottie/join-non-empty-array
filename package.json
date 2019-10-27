@@ -9,7 +9,7 @@
     "email": "wowmotty@gmail.com"
   },
   "engines": {
-    "node": ">=6"
+    "node": ">=8"
   },
   "scripts": {
     "test": "xo && ava"
@@ -30,11 +30,12 @@
       "quotes": [
         "error",
         "double"
-      ]
+      ],
+      "padding-line-between-statements": 0
     }
   },
   "devDependencies": {
-    "ava": "*",
-    "xo": "*"
+    "ava": "^2.4.0",
+    "xo": "^0.25.3"
   }
 }
