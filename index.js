@@ -1,8 +1,18 @@
 "use strict";
 
-module.exports = (arry, joiner = ",", options = {}) => {
+const flat = require("array.prototype.flat");
+
+module.exports = (array, joiner = ",", options = {}) => {
+	let arry;
+	const depth = isNaN(options.flattenDepth) ? Infinity : options.flattenDepth;
+	if (depth) {
+		arry = typeof Array.prototype.flat === "function"
+			? array.flat(depth)
+			: flat(array, depth);
+	} else {
+		arry = array;
+	}
 	return arry
-		.flat(options.flattenDepth || Infinity)
 		.map(elm => {
 			let str;
 			if (typeof elm === "number" && !isNaN(elm)) {

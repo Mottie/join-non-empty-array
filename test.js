@@ -37,11 +37,19 @@ test("append joiner", t => {
 	t.is(j(["color:red", "", "border:blue"], ";", opts), "color:red;border:blue;");
 });
 
+// Nested array example
+const array = [0, , 1, " ", [" 3", null, [, 5, undefined, [, 7]]]];
+
 test("flatten nested arrays", t => {
-	const array = [0, 1, " ", [" 3", null, [, 5, undefined, [, 7]]]];
 	// Option flattenDepth set to Infinity by default; flatten removes empty slots
 	t.is(j(array, "x"), "0x1x x 3xnullx5xundefinedx7");
-	const opts = {flattenDepth: 2};
+	const opts = {flattenDepth: 0};
+	t.is(j(array, "x", opts), "0x1x x 3,,,5,,,7");
+	opts.flattenDepth = 1;
+	t.is(j(array, "x", opts), "0x1x x 3xnullx,5,,,7");
+	opts.flattenDepth = 3;
+	t.is(j(array, "x", opts), "0x1x x 3xnullx5xundefinedx7");
+	opts.flattenDepth = 2;
 	t.is(j(array, "x", opts), "0x1x x 3xnullx5xundefinedx,7");
 	opts.ignoreWhiteSpace = true;
 	t.is(j(array, "x", opts), "0x1x 3xnullx5xundefinedx,7");
@@ -69,8 +77,5 @@ test("the works", t => {
 	t.is(j([1, " ", "2\n\r", false, "  \t   ", 4], ",", opts), "1,2,4,");
 	t.is(j(["\na", "b\n", "   ", "d\t", "\t\n", "\tf\n "], "-", opts), "a-b-d-f-");
 	t.is(j(["a  ", "\t\n", "  b", "", "d"], ";", opts), "a;b;d;");
-	t.is(
-		j([0, 1, " ", [" 3 ", null, [, 5, undefined, [, 7]]]], ",", opts),
-		"0,1,3,5,7,"
-	);
+	t.is(j(array, ",", opts), "0,1,3,5,7,");
 });

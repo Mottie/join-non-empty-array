@@ -143,26 +143,31 @@ _default is set to `Infinity`_
 nested array(s) of greater depth are automatically flattened when `join()` is
 applied.
 
+Set this option to zero (`0`) to skip using the flatten function
+
 ```js
-const array = [0, 1, " ", [" 3", null, [, 5, undefined, [, 7]]]];
+const array = [0, , 1, " ", [" 3", null, [, 5, undefined, [, 7]]]];
 
-[0, 1, " ", [" 3", null, [, 5, undefined, [, 7]]]].join();
-//=> "0,1, , 3,,,5,,,7"
+array.join();
+//=> "0,,1, , 3,,,5,,,7"
 
-[0, 1, " ", [" 3", null, [, 5, undefined, [, 7]]]].flat(Infinity).join();
+array.flat(Infinity).join();
 //=> "0,1, , 3,,5,,7"
 
-joinArray(array, "0x1x3x5x7x");
-//=> "0,1, , 3,null,5,undefined,7"
+joinArray(array, "x", {flattenDepth: 0});
+//=> "0x1x x 3,,,5,,,7"
 
-joinArray(array, ",", {flattenDepth: 1});
-//=> "0,1, , 3,null,,5,,,7"
+joinArray(array, "x", {flattenDepth: 1});
+//=> "0x1x x 3xnullx,5,,,7"
 
-joinArray(array, ",", {flattenDepth: 2});
-//=> "0,1, , 3,null,5,undefined,,7"
+joinArray(array, "x", {flattenDepth: 2});
+//=> "0x1x x 3xnullx5xundefinedx,7"
 
-joinArray(array, ",", {flattenDepth: 3});
-//=> "0,1, , 3,null,5,undefined,7"
+joinArray(array, "x", {flattenDepth: 3});
+//=> "0x1x x 3xnullx5xundefinedx7"
+
+joinArray(array, "x"); // flattenDepth = Infinity by default
+//=> "0x1x x 3xnullx5xundefinedx7"
 ```
 
 ## Examples
@@ -185,9 +190,9 @@ let array = ["\na", NaN, "b\n", 0, "   ", "d\t", "\t\n", "\tf\n "];
 console.log(joinArray(array, "-", opts));
 //=> "a-b-0-d-f-"
 
-array = [0, 1, " ", [" 3", null, [, 5, undefined, [, 7]]]];
-console.log(joinArray(array, ",", opts));
-//=> "0,1,3,5,7,"
+array = [0, , 1, " ", [" 3", null, [, 5, undefined, [, 7]]]];
+console.log(joinArray(array, "x", opts));
+//=> "0x1x3x5x7x"
 ```
 
 

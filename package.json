@@ -32,12 +32,16 @@
         "error",
         "double"
       ],
-      "padding-line-between-statements": 0
+      "padding-line-between-statements": 0,
+      "operator-linebreak": 0
     }
   },
   "devDependencies": {
     "ava": "^2.4.0",
     "tsd": "^0.10.0",
     "xo": "^0.25.3"
+  },
+  "dependencies": {
+    "array.prototype.flat": "^1.2.2"
   }
 }
