@@ -1,6 +1,6 @@
 {
   "name": "join-non-empty-array",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Join non-empty array elements into a string",
   "license": "MIT",
   "repository": "Mottie/join-non-empty-array",
