@@ -49,6 +49,7 @@ Join an array into a string with options.
 
 Remove white space in array elements before determining if it is empty. The elements are *not* modified.
 
+_Type: `boolean`_<br />
 _default is set to `false`_
 
 ```js
@@ -69,6 +70,7 @@ joinArray(array, ",", {ignoreWhiteSpace: true});
 
 Remove white space from all elements in the array before joining.
 
+_Type: `boolean`_<br />
 _default is set to `false`_
 
 ```js
@@ -89,6 +91,7 @@ joinArray(array, ",", {trimEntries: true});
 
 Treat falsy values (**except zero!**) as an empty element.
 
+_Type: `boolean`_<br />
 _default is set to `false`_
 
 ```js
@@ -112,6 +115,7 @@ joinArray(array, ",", {ignoreFalsy: true});
 
 Append the joiner to the end of the joined array
 
+_Type: `boolean`_<br />
 _default is set to `false`_
 
 ```js
@@ -132,6 +136,7 @@ joinArray(array, ",", {appendJoiner: true});
 
 The library uses [`flat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat) set to this depth - *Added in v1.1.0*.
 
+_Type: `number`_<br />
 _default is set to `Infinity`_
 
 **Note** `flat()` removes empty slots in the array to the set depth. Any
