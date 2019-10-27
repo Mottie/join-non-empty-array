@@ -2,6 +2,7 @@
 
 module.exports = (arry, joiner = ",", options = {}) => {
 	return arry
+		.flat(options.flattenDepth || Infinity)
 		.map(elm => {
 			let str;
 			if (typeof elm === "number" && !isNaN(elm)) {

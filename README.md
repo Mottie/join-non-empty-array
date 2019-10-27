@@ -20,6 +20,17 @@ joinArray([1, , 3, 4]);
 // Built-in join method
 [1, , 3, 4].join();
 //=> "1,,3,4"
+
+// Using flat ignores empty slots; but not slots with falsy values
+[0, , ' ', undefined, null, 2,3].flat().join();
+//=> "0, ,,,2,3"
+
+joinArray([0, , ' ', undefined, null, 2,3]);
+//=> "0, ,undefined,null,2,3"
+
+const options = {ignoreFalsy: true, ignoreWhiteSpace: true};
+joinArray([0, , ' ', undefined, null, 2,3], options);
+//=> "0,2,3"
 ```
 
 ## API
@@ -34,11 +45,11 @@ Join an array into a string with options.
 
 ### Options
 
-All options are `false` by default:
-
 #### `ignoreWhiteSpace`
 
 Remove white space in array elements before determining if it is empty. The elements are *not* modified.
+
+_default is set to `false`_
 
 ```js
 const array = [
@@ -58,6 +69,8 @@ joinArray(array, ",", {ignoreWhiteSpace: true});
 
 Remove white space from all elements in the array before joining.
 
+_default is set to `false`_
+
 ```js
 const array = [
   "\t", // empty when whitespace is trimmed
@@ -75,6 +88,8 @@ joinArray(array, ",", {trimEntries: true});
 #### `ignoreFalsy`
 
 Treat falsy values (**except zero!**) as an empty element.
+
+_default is set to `false`_
 
 ```js
 const array = [
@@ -97,6 +112,8 @@ joinArray(array, ",", {ignoreFalsy: true});
 
 Append the joiner to the end of the joined array
 
+_default is set to `false`_
+
 ```js
 const array = [
   "",   // empty when whitespace is trimmed away
@@ -109,6 +126,38 @@ joinArray(array);
 
 joinArray(array, ",", {appendJoiner: true});
 //=> "1 , 2,"
+```
+
+#### `flattenDepth`
+
+The library uses [`flat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat) set to this depth - *Added in v1.1.0*.
+
+_default is set to `Infinity`_
+
+**Note** `flat()` removes empty slots in the array to the set depth. Any
+nested array(s) of greater depth are automatically flattened when `join()` is
+applied.
+
+```js
+const array = [0, 1, " ", [" 3", null, [, 5, undefined, [, 7]]]];
+
+[0, 1, " ", [" 3", null, [, 5, undefined, [, 7]]]].join();
+//=> "0,1, , 3,,,5,,,7"
+
+[0, 1, " ", [" 3", null, [, 5, undefined, [, 7]]]].flat(Infinity).join();
+//=> "0,1, , 3,,5,,7"
+
+joinArray(array, "0x1x3x5x7x");
+//=> "0,1, , 3,null,5,undefined,7"
+
+joinArray(array, ",", {flattenDepth: 1});
+//=> "0,1, , 3,null,,5,,,7"
+
+joinArray(array, ",", {flattenDepth: 2});
+//=> "0,1, , 3,null,5,undefined,,7"
+
+joinArray(array, ",", {flattenDepth: 3});
+//=> "0,1, , 3,null,5,undefined,7"
 ```
 
 ## Examples
@@ -124,11 +173,16 @@ const opts = {
   ignoreWhiteSpace: true,
   trimEntries: true,
   ignoreFalsy: true,
-  appendJoiner: true
+  appendJoiner: true,
+  flattenDepth: Infinity // default value
 };
-const array = ["\na", NaN, "b\n", 0, "   ", "d\t", "\t\n", "\tf\n "];
+let array = ["\na", NaN, "b\n", 0, "   ", "d\t", "\t\n", "\tf\n "];
 console.log(joinArray(array, "-", opts));
 //=> "a-b-0-d-f-"
+
+array = [0, 1, " ", [" 3", null, [, 5, undefined, [, 7]]]];
+console.log(joinArray(array, ",", opts));
+//=> "0,1,3,5,7,"
 ```
 
 
